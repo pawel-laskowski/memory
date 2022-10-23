@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Card } from './components/Cards';
+import { Card } from './components/Card';
 import './App.css';
 
 import p1 from './assets/cards/p1.png';
@@ -23,16 +23,21 @@ function App() {
   const [turns, setTurns] = useState(0);
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
   const shuffleCards = () => {
     const shuffledCards = [...dummyData, ...dummyData]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
     setCards(shuffledCards);
+    setChoiceOne(null);
+    setChoiceTwo(null);
     setTurns(0);
   };
 
   const handleChoice = (card) => {
+    console.log(choiceOne, choiceTwo);
+    console.log(card);
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
@@ -40,20 +45,31 @@ function App() {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns((prevTurn) => prevTurn + 1);
+    setDisabled(false);
   };
 
   useEffect(() => {
     if (choiceOne && choiceTwo) {
-      if (choiceOne === choiceTwo) {
+      setDisabled(true);
+
+      if (choiceOne.src === choiceTwo.src) {
         setCards((prevCards) => {
           return prevCards.map((card) =>
-            card.src === choiceOne ? { ...card, matched: true } : card
+            card.src === choiceOne.src ? { ...card, matched: true } : card
           );
         });
+        resetTurn();
+      } else {
+        setTimeout(() => {
+          resetTurn();
+        }, 1000);
       }
-      resetTurn();
     }
   }, [choiceOne, choiceTwo]);
+
+  useEffect(() => {
+    shuffleCards();
+  }, []);
 
   return (
     <div className="App">
@@ -61,9 +77,16 @@ function App() {
       <button onClick={shuffleCards}>New Game</button>
       <div className="card-grid">
         {cards.map((card) => (
-          <Card card={card} key={card.id} handleChoice={handleChoice} />
+          <Card
+            card={card}
+            key={card.id}
+            handleChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
+            disabled={disabled}
+          />
         ))}
       </div>
+      <p>turns: {turns}</p>
     </div>
   );
 }
