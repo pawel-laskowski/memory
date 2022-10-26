@@ -1,7 +1,5 @@
 import './Card.css';
 
-import back from '../assets/cards/back.png';
-
 export const Card = (props) => {
   const handleClick = () => {
     if (!props.disabled) {
@@ -14,7 +12,7 @@ export const Card = (props) => {
         <img className="front" src={props.card.src} alt="card front" />
         <img
           className="back"
-          src={back}
+          src={'/images/rick-and-morty.png'}
           alt="card back"
           onClick={handleClick}
         />

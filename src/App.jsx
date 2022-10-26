@@ -1,22 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Card } from './components/Card';
+import { prepareCards } from './helpers/cards-data';
+
 import './App.css';
-
-import p1 from './assets/cards/p1.png';
-import p2 from './assets/cards/p2.png';
-import p3 from './assets/cards/p3.png';
-import p4 from './assets/cards/p4.png';
-import p5 from './assets/cards/p5.png';
-import p6 from './assets/cards/p6.png';
-
-const dummyData = [
-  { src: p1, matched: false },
-  { src: p2, matched: false },
-  { src: p3, matched: false },
-  { src: p4, matched: false },
-  { src: p5, matched: false },
-  { src: p6, matched: false },
-];
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -25,8 +11,9 @@ function App() {
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
 
-  const shuffleCards = () => {
-    const shuffledCards = [...dummyData, ...dummyData]
+  const shuffleCards = async () => {
+    const cards = await prepareCards(6, 'kitties');
+    const shuffledCards = [...cards, ...cards]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
     setCards(shuffledCards);
