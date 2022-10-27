@@ -2,12 +2,10 @@ const randomCardNumbers = (availableCards, cardsAmount) => {
   const cardNumbers = [];
 
   for (let index = 0; index < cardsAmount; ) {
-    const newNumber = (Math.random() * availableCards).toFixed();
+    const newNumber = (Math.random() * availableCards + 1).toFixed();
     if (!cardNumbers.includes(newNumber)) {
       cardNumbers.push(newNumber);
       index++;
-    } else {
-      return;
     }
   }
 
@@ -20,10 +18,10 @@ export const prepareCards = async (cardsAmount, theme) => {
 
   switch (theme) {
     case 'pokemon':
-      availableCards = 905;
+      availableCards = 904;
       break;
     case 'rickAndMorty':
-      availableCards = 183;
+      availableCards = 825;
       break;
     default:
       availableCards = 0;
@@ -46,7 +44,7 @@ export const prepareCards = async (cardsAmount, theme) => {
   } else if (theme === 'kitties') {
     await fetch(
       `https://api.thecatapi.com/v1/images/search?limit=${cardsAmount}&api_key=${
-        import.meta.env
+        import.meta.env.VITE_CATAPI_KEY
       }`
     )
       .then((response) => response.json())

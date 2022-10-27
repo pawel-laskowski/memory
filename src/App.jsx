@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Card } from './components/Card';
 import { prepareCards } from './helpers/cards-data';
 
 import './App.css';
+import { SettingsModal } from './components/SettingsModal';
+import { SettingsContext } from './store/settings-context';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -11,8 +13,14 @@ function App() {
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
 
+  const settingsCtx = useContext(SettingsContext);
+
   const shuffleCards = async () => {
-    const cards = await prepareCards(6, 'kitties');
+    console.log(settingsCtx);
+    const cards = await prepareCards(
+      settingsCtx.difficultyLevel,
+      settingsCtx.theme
+    );
     const shuffledCards = [...cards, ...cards]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
@@ -23,8 +31,6 @@ function App() {
   };
 
   const handleChoice = (card) => {
-    console.log(choiceOne, choiceTwo);
-    console.log(card);
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
@@ -54,14 +60,15 @@ function App() {
     }
   }, [choiceOne, choiceTwo]);
 
-  useEffect(() => {
-    shuffleCards();
-  }, []);
+  // useEffect(() => {
+  //   shuffleCards();
+  // }, []);
 
   return (
     <div className="App">
       <h1>Memory Game</h1>
       <button onClick={shuffleCards}>New Game</button>
+      <SettingsModal />
       <div className="card-grid">
         {cards.map((card) => (
           <Card
