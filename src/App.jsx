@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { Card } from './components/Card';
 import { prepareCards } from './helpers/cards-data';
-
-import './App.css';
-import { SettingsModal } from './components/SettingsModal';
+import { Settings } from './components/Settings';
 import { SettingsContext } from './store/settings-context';
+import './App.css';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -14,9 +13,16 @@ function App() {
   const [disabled, setDisabled] = useState(false);
 
   const settingsCtx = useContext(SettingsContext);
+  const [openSettings, setOpenSettings] = useState(false);
+
+  const openSettingsHandler = () => {
+    setOpenSettings(true);
+  };
+  const closeSettingsHandler = () => {
+    setOpenSettings(false);
+  };
 
   const shuffleCards = async () => {
-    console.log(settingsCtx);
     const cards = await prepareCards(
       settingsCtx.difficultyLevel,
       settingsCtx.theme
@@ -28,6 +34,7 @@ function App() {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns(0);
+    closeSettingsHandler();
   };
 
   const handleChoice = (card) => {
@@ -60,15 +67,13 @@ function App() {
     }
   }, [choiceOne, choiceTwo]);
 
-  // useEffect(() => {
-  //   shuffleCards();
-  // }, []);
-
   return (
     <div className="App">
       <h1>Memory Game</h1>
-      <button onClick={shuffleCards}>New Game</button>
-      <SettingsModal />
+      <button onClick={openSettingsHandler}>New Game</button>
+      {openSettings && (
+        <Settings onClose={closeSettingsHandler} shuffleCards={shuffleCards} />
+      )}
       <div className="card-grid">
         {cards.map((card) => (
           <Card
