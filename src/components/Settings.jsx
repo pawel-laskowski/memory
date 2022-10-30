@@ -45,13 +45,13 @@ export const Settings = (props) => {
       </div>
       <div>
         <p>Difficulty level:</p>
-        <button onClick={changeDifficultyLevelHandler} value={3}>
+        <button onClick={changeDifficultyLevelHandler} value="childish">
           Childish
         </button>
-        <button onClick={changeDifficultyLevelHandler} value={8}>
+        <button onClick={changeDifficultyLevelHandler} value="normal">
           Normal
         </button>
-        <button onClick={changeDifficultyLevelHandler} value={20}>
+        <button onClick={changeDifficultyLevelHandler} value="insane">
           Insane
         </button>
       </div>

@@ -12,9 +12,24 @@ const randomCardNumbers = (availableCards, cardsAmount) => {
   return cardNumbers;
 };
 
-export const prepareCards = async (cardsAmount, theme) => {
+export const prepareCards = async (difficultyLevel, theme) => {
   let preparedCards;
   let availableCards;
+  let cardsAmount;
+
+  switch (difficultyLevel) {
+    case 'childish':
+      cardsAmount = 3;
+      break;
+    case 'normal':
+      cardsAmount = 8;
+      break;
+    case 'insane':
+      cardsAmount = 20;
+      break;
+    default:
+      cardsAmount = 0;
+  }
 
   switch (theme) {
     case 'pokemon':

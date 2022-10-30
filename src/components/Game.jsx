@@ -13,8 +13,8 @@ export const Game = () => {
   const [startTime, setStartTime] = useState(null);
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
-  const [disabled, setDisabled] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const settingsCtx = useContext(SettingsContext);
   const [openSettings, setOpenSettings] = useState(false);
@@ -35,10 +35,12 @@ export const Game = () => {
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
     setCards(shuffledCards);
-    setChoiceOne(null);
-    setChoiceTwo(null);
     setTurns(0);
     setStartTime(moment().valueOf());
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setGameFinished(false);
+
     closeSettingsHandler();
   };
 

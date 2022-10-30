@@ -3,14 +3,14 @@
   grid-gap: 20px;
 }
 
-.card-grid--3 {
+.card-grid--childish {
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.card-grid--8 {
+.card-grid--normal {
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
-.card-grid--20 {
+.card-grid--insane {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }

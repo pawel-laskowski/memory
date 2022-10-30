@@ -1,24 +1,37 @@
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { SettingsContext } from '../store/settings-context';
+import { WinnerForm } from './WinnerForm';
 
 export const Stats = (props) => {
   const [gameTime, setGameTime] = useState('');
+  const settingsCtx = useContext(SettingsContext);
+  const [openWinnerForm, setOpenWinnerForm] = useState(false);
+
+  const closeHandler = () => {
+    setOpenWinnerForm(false);
+  };
 
   const getTime = () => {
     const now = moment().valueOf();
     const gameDuration = moment.duration(now - props.startTime);
+    const { hours, minutes, seconds } = gameDuration._data;
     let gameTimeString;
-    if (gameDuration._data.hours > 1) {
-      gameTimeString = `${gameDuration._data.hours}:${gameDuration._data.minutes}:${gameDuration._data.seconds}`;
+    if (hours > 1) {
+      gameTimeString = `${hours} hours ${minutes} minutes ${seconds} seconds`;
     } else {
-      gameTimeString = `${gameDuration._data.minutes}:${gameDuration._data.seconds}`;
+      gameTimeString = `${minutes} minutes ${seconds} seconds`;
     }
+
     setGameTime(gameTimeString);
   };
 
   useEffect(() => {
     if (props.gameFinished) {
       getTime();
+      setTimeout(() => {
+        setOpenWinnerForm(true);
+      }, 2000);
     } else {
       const interval = setInterval(() => {
         getTime();
@@ -30,7 +43,15 @@ export const Stats = (props) => {
   return (
     <div>
       <p>Turns: {props.turns}</p>
-      <p>Time: {gameTime}</p>
+      <p>Game time: {gameTime}</p>
+      {openWinnerForm && (
+        <WinnerForm
+          gameTime={gameTime}
+          difficultyLevel={settingsCtx.difficultyLevel}
+          turns={props.turns}
+          onClose={closeHandler}
+        />
+      )}
     </div>
   );
 };
