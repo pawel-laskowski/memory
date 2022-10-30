@@ -7,7 +7,6 @@ export const Settings = (props) => {
   const settingsCtx = useContext(SettingsContext);
 
   const changeThemeHandler = (e) => {
-    console.log(e);
     settingsCtx.changeTheme(e.target.value);
   };
 
