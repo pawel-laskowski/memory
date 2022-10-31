@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { useContext, useEffect, useState } from 'react';
+import { formatTime } from '../helpers/time-format';
 import { SettingsContext } from '../store/settings-context';
 import { WinnerForm } from './WinnerForm';
 
@@ -14,16 +15,7 @@ export const Stats = (props) => {
 
   const getTime = () => {
     const now = moment().valueOf();
-    const gameDuration = moment.duration(now - props.startTime);
-    const { hours, minutes, seconds } = gameDuration._data;
-    let gameTimeString;
-    if (hours > 1) {
-      gameTimeString = `${hours} hours ${minutes} minutes ${seconds} seconds`;
-    } else {
-      gameTimeString = `${minutes} minutes ${seconds} seconds`;
-    }
-
-    setGameTime(gameTimeString);
+    setGameTime(now - props.startTime);
   };
 
   useEffect(() => {
@@ -43,7 +35,7 @@ export const Stats = (props) => {
   return (
     <div>
       <p>Turns: {props.turns}</p>
-      <p>Game time: {gameTime}</p>
+      <p>Game time: {formatTime(gameTime)}</p>
       {openWinnerForm && (
         <WinnerForm
           gameTime={gameTime}

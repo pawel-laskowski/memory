@@ -3,8 +3,8 @@ export const Score = (props) => {
     <div>
       <span>{props.rank}</span>
       <span>{props.name}</span>
-      <span>{props.turns}</span>
       <span>{props.time}</span>
+      <span>{props.turns}</span>
     </div>
   );
 };

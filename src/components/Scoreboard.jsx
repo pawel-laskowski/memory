@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { formatTime } from '../helpers/time-format';
 import { Score } from './Score';
 import './Scoreboard.css';
 
@@ -14,15 +15,33 @@ export const Scoreboard = () => {
   const filterScores = () => {
     const scoresByLevel = scores
       .filter((score) => score.difficultyLevel === levelFilter)
-      .sort((a, b) => (a.gameTime > b.gameTime ? a : b));
+      .sort((a, b) => (a.gameTime > b.gameTime ? 1 : -1));
     const filteredScores = [];
 
     for (let index = 0; index < 10; index++) {
+      let suffix;
+
+      switch (index + 1) {
+        case 1:
+          suffix = 'st';
+          break;
+        case 2:
+          suffix = 'nd';
+          break;
+        case 3:
+          suffix = 'rd';
+          break;
+        default:
+          suffix = 'th';
+      }
+
       filteredScores.push({
-        rank: index + 1,
+        rank: index + 1 + suffix,
         name: scoresByLevel[index] ? scoresByLevel[index].name : '-',
+        time: scoresByLevel[index]
+          ? formatTime(scoresByLevel[index].gameTime)
+          : '-',
         turns: scoresByLevel[index] ? scoresByLevel[index].turns : '-',
-        time: scoresByLevel[index] ? scoresByLevel[index].gameTime : '-',
       });
     }
 
@@ -63,8 +82,8 @@ export const Scoreboard = () => {
         <div>
           <span>RANK</span>
           <span>NAME</span>
-          <span>TURNS</span>
           <span>TIME</span>
+          <span>TURNS</span>
         </div>
         {scoresForDisplay.length > 0 && (
           <div>
@@ -74,8 +93,8 @@ export const Scoreboard = () => {
                   key={Math.random()}
                   rank={score.rank}
                   name={score.name}
-                  turns={score.turns}
                   time={score.time}
+                  turns={score.turns}
                 />
               );
             })}
