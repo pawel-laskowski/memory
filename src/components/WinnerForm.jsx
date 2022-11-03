@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
-import { Modal } from './Modal';
+import { Modal } from '../UI/Modal';
+import './WinnerForm.css';
 
 export const WinnerForm = (props) => {
   const nameRef = useRef();
@@ -44,12 +45,10 @@ export const WinnerForm = (props) => {
 
   return (
     <Modal onClose={props.onClose}>
-      <form onSubmit={submitHandler}>
-        <p>
-          Congratulations! You finished the game! Please type your name to save
-          your stats.
-        </p>
-        <input type="text" ref={nameRef} />
+      <form onSubmit={submitHandler} className="winner-form">
+        <p>Congratulations! You won the game!</p>
+        <p>Please type your name to save your score.</p>
+        <input className="winner-form__input" type="text" ref={nameRef} />
         <button>Confirm</button>
       </form>
       {isLoading && <p>Sending data...</p>}

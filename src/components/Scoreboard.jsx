@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { formatTime } from '../helpers/time-format';
+import { Modal } from '../UI/Modal';
 import { Score } from './Score';
 import './Scoreboard.css';
 
-export const Scoreboard = () => {
+export const Scoreboard = (props) => {
   const [scores, setScores] = useState([]);
   const [levelFilter, setLevelFilter] = useState('childish');
   const [scoresForDisplay, setScoresForDisplay] = useState([]);
 
-  const changeLeverHandler = (e) => {
+  const changeLevelHandler = (e) => {
     setLevelFilter(e.target.id);
   };
 
@@ -65,21 +66,40 @@ export const Scoreboard = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Best players</h1>
-      <div>
-        <span id="childish" onClick={changeLeverHandler}>
-          Childish
-        </span>
-        <span id="medium" onClick={changeLeverHandler}>
-          Medium
-        </span>
-        <span id="insane" onClick={changeLeverHandler}>
-          Insane
-        </span>
-      </div>
-      <div>
-        <div>
+    <Modal onClose={props.onClose}>
+      <div className="scoreboard">
+        <h1>Best players</h1>
+        <div className="scoreboard__levels">
+          <span
+            className={
+              'scoreboard__level' +
+              (levelFilter === 'childish' ? ' active' : '')
+            }
+            id="childish"
+            onClick={changeLevelHandler}
+          >
+            Childish
+          </span>
+          <span
+            className={
+              'scoreboard__level' + (levelFilter === 'normal' ? ' active' : '')
+            }
+            id="normal"
+            onClick={changeLevelHandler}
+          >
+            Normal
+          </span>
+          <span
+            className={
+              'scoreboard__level' + (levelFilter === 'insane' ? ' active' : '')
+            }
+            id="insane"
+            onClick={changeLevelHandler}
+          >
+            Insane
+          </span>
+        </div>
+        <div className="scoreboard__columns">
           <span>RANK</span>
           <span>NAME</span>
           <span>TIME</span>
@@ -101,6 +121,9 @@ export const Scoreboard = () => {
           </div>
         )}
       </div>
-    </div>
+      <button className="close-button" onClick={props.onClose}>
+        Close
+      </button>
+    </Modal>
   );
 };

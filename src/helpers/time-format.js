@@ -13,13 +13,13 @@ export const formatTime = (timestamp) => {
     timeString =
       formatValue(minutes) +
       ' minute' +
-      (minutes === 1 ? '' : 's') +
+      (minutes === 1 ? ' ' : 's ') +
       timeString;
   }
 
   if (hours > 0) {
     timeString =
-      formatValue(hours) + ' hour' + (hours === 1 ? '' : 's') + timeString;
+      formatValue(hours) + ' hour' + (hours === 1 ? ' ' : 's ') + timeString;
   }
 
   return timeString;

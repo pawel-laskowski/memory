@@ -1,61 +1,97 @@
 import { useContext } from 'react';
 import { SettingsContext } from '../store/settings-context';
-import { Modal } from './Modal';
+import { Modal } from '../UI/Modal';
 import './Settings.css';
 
 export const Settings = (props) => {
   const settingsCtx = useContext(SettingsContext);
 
-  const changeThemeHandler = (e) => {
-    settingsCtx.changeTheme(e.target.value);
+  const changeThemeHandler = (theme) => {
+    settingsCtx.changeTheme(theme);
+    console.log(theme);
   };
 
   const changeDifficultyLevelHandler = (e) => {
     settingsCtx.changeDifficultyLevel(e.target.value);
   };
 
+  const startGame = () => {
+    props.startGameHandler();
+    props.closeSettingsHandler();
+  };
+
   return (
     <Modal onClose={props.onClose}>
-      <div>
+      <div className="container">
         <p>Theme:</p>
-        <button onClick={changeThemeHandler} value="pokemon">
-          <img
-            className="theme-picture"
-            src={'/images/pokemon.png'}
-            alt="pokemon"
-            value="pokemon"
-          />
-        </button>
-        <button onClick={changeThemeHandler} value="rickAndMorty">
-          <img
-            className="theme-picture"
-            src={'/images/rickAndMorty.png'}
-            alt="rick-and-morty"
-            value="rickAndMorty"
-          />
-        </button>
-        <button onClick={changeThemeHandler} value="kitties">
-          <img
-            className="theme-picture"
-            src={'/images/kitties.png'}
-            alt="kitties"
-            value="kitties"
-          />
-        </button>
-      </div>
-      <div>
+        <div className="settings--options">
+          <button
+            className={settingsCtx.theme === 'pokemon' ? 'active' : ''}
+            onClick={() => {
+              changeThemeHandler('pokemon');
+            }}
+          >
+            <img
+              className="theme-picture"
+              src={'/images/pokemon.png'}
+              alt="pokemon"
+            />
+          </button>
+          <button
+            className={settingsCtx.theme === 'rickAndMorty' ? 'active' : ''}
+            onClick={() => {
+              changeThemeHandler('rickAndMorty');
+            }}
+          >
+            <img
+              className="theme-picture"
+              src={'/images/rickAndMorty.png'}
+              alt="rick-and-morty"
+            />
+          </button>
+          <button
+            className={settingsCtx.theme === 'kitties' ? 'active' : ''}
+            onClick={() => {
+              changeThemeHandler('kitties');
+            }}
+          >
+            <img
+              className="theme-picture"
+              src={'/images/kitties.png'}
+              alt="kitties"
+            />
+          </button>
+        </div>
         <p>Difficulty level:</p>
-        <button onClick={changeDifficultyLevelHandler} value="childish">
-          Childish
-        </button>
-        <button onClick={changeDifficultyLevelHandler} value="normal">
-          Normal
-        </button>
-        <button onClick={changeDifficultyLevelHandler} value="insane">
-          Insane
+        <div className="settings--options">
+          <button
+            className={
+              settingsCtx.difficultyLevel === 'childish' ? 'active' : ''
+            }
+            onClick={changeDifficultyLevelHandler}
+            value="childish"
+          >
+            Childish
+          </button>
+          <button
+            className={settingsCtx.difficultyLevel === 'normal' ? 'active' : ''}
+            onClick={changeDifficultyLevelHandler}
+            value="normal"
+          >
+            Normal
+          </button>
+          <button
+            className={settingsCtx.difficultyLevel === 'insane' ? 'active' : ''}
+            onClick={changeDifficultyLevelHandler}
+            value="insane"
+          >
+            Insane
+          </button>
+        </div>
+        <button className="settings--confirm" onClick={startGame}>
+          Start Game!
         </button>
       </div>
-      <button onClick={props.shuffleCards}>Start Game!</button>
     </Modal>
   );
 };

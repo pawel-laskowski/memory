@@ -1,3 +1,23 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.active {
+  border: 1px solid black;
+}
+
+.settings--options {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.settings--confirm {
+  margin-top: 20px;
+}
+
 .theme-picture {
   width: 100px;
   height: 100px;

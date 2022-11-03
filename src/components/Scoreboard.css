@@ -1,3 +1,42 @@
-span {
-  margin: 10px;
+h1 {
+  text-align: center;
+}
+
+.scoreboard {
+  border: 1px solid #e5e5e5;
+  margin-bottom: 10px;
+}
+.scoreboard__levels {
+  display: flex;
+  border-top: 1px solid #e5e5e5;
+
+  justify-content: space-around;
+}
+.scoreboard__level {
+  flex-grow: 1;
+  padding: 6px;
+}
+.scoreboard__level:hover {
+  background: #f7f7f7;
+}
+
+.scoreboard__columns {
+  background: #f7f7f7;
+  border: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
+}
+
+.close-button {
+  background: #f7f7f7;
+  border: 1px solid #e5e5e5;
+  display: inline-block;
+  padding: 8px 30px 8px 30px;
+  margin: auto;
+}
+
+.active {
+  background: #f7f7f7;
+  font-weight: bold;
 }

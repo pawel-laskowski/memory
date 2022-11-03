@@ -1,11 +1,10 @@
 import { Fragment, useContext, useEffect, useState } from 'react';
 import { Card } from './Card';
 import { prepareCards } from '../helpers/cards-data';
-import { Settings } from './Settings';
 import { SettingsContext } from '../store/settings-context';
-import './Game.css';
 import { Stats } from './Stats';
 import moment from 'moment';
+import './Game.css';
 
 export const Game = () => {
   const [cards, setCards] = useState(null);
@@ -15,16 +14,7 @@ export const Game = () => {
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [gameFinished, setGameFinished] = useState(false);
   const [disabled, setDisabled] = useState(false);
-
   const settingsCtx = useContext(SettingsContext);
-  const [openSettings, setOpenSettings] = useState(false);
-
-  const openSettingsHandler = () => {
-    setOpenSettings(true);
-  };
-  const closeSettingsHandler = () => {
-    setOpenSettings(false);
-  };
 
   const shuffleCards = async () => {
     const cards = await prepareCards(
@@ -40,8 +30,6 @@ export const Game = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
     setGameFinished(false);
-
-    closeSettingsHandler();
   };
 
   const handleChoice = (card) => {
@@ -83,35 +71,31 @@ export const Game = () => {
     }
   }, [cards]);
 
+  useEffect(() => {
+    shuffleCards();
+  }, []);
+
   return (
     <div>
-      <button onClick={openSettingsHandler}>New Game</button>
-      {openSettings && (
-        <Settings onClose={closeSettingsHandler} shuffleCards={shuffleCards} />
+      {cards && (
+        <div className={`card-grid card-grid--${settingsCtx.difficultyLevel}`}>
+          {cards.map((card) => (
+            <Card
+              card={card}
+              key={card.id}
+              handleChoice={handleChoice}
+              flipped={card === choiceOne || card === choiceTwo || card.matched}
+              disabled={disabled}
+            />
+          ))}
+        </div>
       )}
       {startTime && (
-        <Fragment>
-          <div
-            className={`card-grid card-grid--${settingsCtx.difficultyLevel}`}
-          >
-            {cards.map((card) => (
-              <Card
-                card={card}
-                key={card.id}
-                handleChoice={handleChoice}
-                flipped={
-                  card === choiceOne || card === choiceTwo || card.matched
-                }
-                disabled={disabled}
-              />
-            ))}
-          </div>
-          <Stats
-            turns={turns}
-            startTime={startTime}
-            gameFinished={gameFinished}
-          />
-        </Fragment>
+        <Stats
+          turns={turns}
+          startTime={startTime}
+          gameFinished={gameFinished}
+        />
       )}
     </div>
   );

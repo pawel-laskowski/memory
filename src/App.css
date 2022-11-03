@@ -3,4 +3,20 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  position: relative;
+}
+.app {
+  min-width: 600px;
+}
+
+.button-scoreboard {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.button-scoreboard img {
+  max-width: 100%;
 }
