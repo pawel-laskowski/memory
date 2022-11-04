@@ -5,6 +5,7 @@ import { SettingsContext } from '../store/settings-context';
 import { Stats } from './Stats';
 import moment from 'moment';
 import './Game.css';
+import { Loader } from '../UI/Loader';
 
 export const Game = () => {
   const [cards, setCards] = useState(null);
@@ -77,7 +78,7 @@ export const Game = () => {
 
   return (
     <div>
-      {cards && (
+      {cards ? (
         <div className={`card-grid card-grid--${settingsCtx.difficultyLevel}`}>
           {cards.map((card) => (
             <Card
@@ -89,6 +90,8 @@ export const Game = () => {
             />
           ))}
         </div>
+      ) : (
+        <Loader />
       )}
       {startTime && (
         <Stats

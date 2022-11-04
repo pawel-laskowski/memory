@@ -4,6 +4,8 @@ import { formatTime } from '../helpers/time-format';
 import { SettingsContext } from '../store/settings-context';
 import { WinnerForm } from './WinnerForm';
 
+import './Stats.css';
+
 export const Stats = (props) => {
   const [gameTime, setGameTime] = useState('');
   const settingsCtx = useContext(SettingsContext);
@@ -33,7 +35,7 @@ export const Stats = (props) => {
   }, [props.startTime, props.gameFinished]);
 
   return (
-    <div>
+    <div className="stats">
       <p>Turns: {props.turns}</p>
       <p>Game time: {formatTime(gameTime)}</p>
       {openWinnerForm && (

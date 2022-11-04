@@ -24,3 +24,17 @@ export const formatTime = (timestamp) => {
 
   return timeString;
 };
+
+export const formatTimeShort = (timestamp) => {
+  const gameDuration = moment.duration(timestamp);
+  const { hours, minutes, seconds } = gameDuration._data;
+  const formatValue = (value) => (value < 10 ? '0' + value : value);
+
+  let timeString;
+
+  timeString = `${formatValue(hours)}:${formatValue(minutes)}:${formatValue(
+    seconds
+  )}`;
+
+  return timeString;
+};

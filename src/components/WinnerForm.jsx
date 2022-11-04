@@ -1,18 +1,29 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Modal } from '../UI/Modal';
 import './WinnerForm.css';
 
 export const WinnerForm = (props) => {
-  const nameRef = useRef();
+  const [name, setName] = useState('');
+  // const nameRef = useRef();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const nameInputChangeHandler = (e) => {
+    setError(null);
+    const winnerName = e.target.value.trim();
+    if (winnerName.length < 13) {
+      setName(winnerName);
+    } else {
+      setError("Your typed name can't have more than 12 characters.");
+    }
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    const winnerName = nameRef.current.value.trim();
-    if (winnerName.length > 0) {
+
+    if (name.length > 0) {
       const winnerData = {
-        name: winnerName,
+        name: name,
         difficultyLevel: props.difficultyLevel,
         gameTime: props.gameTime,
         turns: props.turns,
@@ -48,7 +59,12 @@ export const WinnerForm = (props) => {
       <form onSubmit={submitHandler} className="winner-form">
         <p>Congratulations! You won the game!</p>
         <p>Please type your name to save your score.</p>
-        <input className="winner-form__input" type="text" ref={nameRef} />
+        <input
+          className="winner-form__input"
+          type="text"
+          value={name}
+          onChange={nameInputChangeHandler}
+        />
         <button>Confirm</button>
       </form>
       {isLoading && <p>Sending data...</p>}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { formatTime } from '../helpers/time-format';
+import { formatTimeShort } from '../helpers/time-format';
+import { Loader } from '../UI/Loader';
 import { Modal } from '../UI/Modal';
 import { Score } from './Score';
 import './Scoreboard.css';
@@ -40,7 +41,7 @@ export const Scoreboard = (props) => {
         rank: index + 1 + suffix,
         name: scoresByLevel[index] ? scoresByLevel[index].name : '-',
         time: scoresByLevel[index]
-          ? formatTime(scoresByLevel[index].gameTime)
+          ? formatTimeShort(scoresByLevel[index].gameTime)
           : '-',
         turns: scoresByLevel[index] ? scoresByLevel[index].turns : '-',
       });
@@ -51,7 +52,7 @@ export const Scoreboard = (props) => {
 
   useEffect(() => {
     filterScores();
-  }, [levelFilter]);
+  }, [levelFilter, scores]);
 
   useEffect(() => {
     fetch(import.meta.env.VITE_FIREBASE_URL)
@@ -67,45 +68,47 @@ export const Scoreboard = (props) => {
 
   return (
     <Modal onClose={props.onClose}>
-      <div className="scoreboard">
-        <h1>Best players</h1>
-        <div className="scoreboard__levels">
-          <span
-            className={
-              'scoreboard__level' +
-              (levelFilter === 'childish' ? ' active' : '')
-            }
-            id="childish"
-            onClick={changeLevelHandler}
-          >
-            Childish
-          </span>
-          <span
-            className={
-              'scoreboard__level' + (levelFilter === 'normal' ? ' active' : '')
-            }
-            id="normal"
-            onClick={changeLevelHandler}
-          >
-            Normal
-          </span>
-          <span
-            className={
-              'scoreboard__level' + (levelFilter === 'insane' ? ' active' : '')
-            }
-            id="insane"
-            onClick={changeLevelHandler}
-          >
-            Insane
-          </span>
-        </div>
-        <div className="scoreboard__columns">
-          <span>RANK</span>
-          <span>NAME</span>
-          <span>TIME</span>
-          <span>TURNS</span>
-        </div>
-        {scoresForDisplay.length > 0 && (
+      {scores.length > 0 ? (
+        <div className="scoreboard">
+          <h1>Best players</h1>
+          <div className="scoreboard__levels">
+            <span
+              className={
+                'scoreboard__level' +
+                (levelFilter === 'childish' ? ' active' : '')
+              }
+              id="childish"
+              onClick={changeLevelHandler}
+            >
+              Childish
+            </span>
+            <span
+              className={
+                'scoreboard__level' +
+                (levelFilter === 'normal' ? ' active' : '')
+              }
+              id="normal"
+              onClick={changeLevelHandler}
+            >
+              Normal
+            </span>
+            <span
+              className={
+                'scoreboard__level' +
+                (levelFilter === 'insane' ? ' active' : '')
+              }
+              id="insane"
+              onClick={changeLevelHandler}
+            >
+              Insane
+            </span>
+          </div>
+          <div className="scoreboard__columns">
+            <span>RANK</span>
+            <span>NAME</span>
+            <span>TIME</span>
+            <span>TURNS</span>
+          </div>
           <div>
             {scoresForDisplay.map((score) => {
               return (
@@ -119,8 +122,10 @@ export const Scoreboard = (props) => {
               );
             })}
           </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <Loader />
+      )}
       <button className="close-button" onClick={props.onClose}>
         Close
       </button>
