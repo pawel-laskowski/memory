@@ -5,18 +5,37 @@
   text-align: center;
   position: relative;
 }
-.app {
-  min-width: 300px;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
-.button-scoreboard {
-  width: 80px;
-  height: 80px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
+.header h1 {
+  font-size: 60px;
+}
+.scoreboard-button {
+  padding: 5px;
+  width: 60px;
+  height: 60px;
 }
 
-.button-scoreboard img {
+.scoreboard-button img {
   max-width: 100%;
+}
+
+@media (min-width: 481px) {
+  .app {
+    min-width: 480px;
+  }
+  .header {
+    justify-content: center;
+    position: relative;
+  }
+  .scoreboard-button {
+    position: absolute;
+    right: 0;
+  }
 }

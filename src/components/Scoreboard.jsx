@@ -68,64 +68,61 @@ export const Scoreboard = (props) => {
 
   return (
     <Modal onClose={props.onClose}>
-      {scores.length > 0 ? (
-        <div className="scoreboard">
-          <h1>Best players</h1>
-          <div className="scoreboard__levels">
-            <span
-              className={
-                'scoreboard__level' +
-                (levelFilter === 'childish' ? ' active' : '')
-              }
-              id="childish"
-              onClick={changeLevelHandler}
-            >
-              Childish
-            </span>
-            <span
-              className={
-                'scoreboard__level' +
-                (levelFilter === 'normal' ? ' active' : '')
-              }
-              id="normal"
-              onClick={changeLevelHandler}
-            >
-              Normal
-            </span>
-            <span
-              className={
-                'scoreboard__level' +
-                (levelFilter === 'insane' ? ' active' : '')
-              }
-              id="insane"
-              onClick={changeLevelHandler}
-            >
-              Insane
-            </span>
-          </div>
-          <div className="scoreboard__columns">
-            <span>RANK</span>
-            <span>NAME</span>
-            <span>TIME</span>
-            <span>TURNS</span>
-          </div>
-          <div>
-            {scoresForDisplay.map((score) => {
-              return (
-                <Score
-                  key={Math.random()}
-                  rank={score.rank}
-                  name={score.name}
-                  time={score.time}
-                  turns={score.turns}
-                />
-              );
-            })}
-          </div>
+      <div className="scoreboard">
+        <h1>Best players</h1>
+        <div className="scoreboard__levels">
+          <span
+            className={
+              'scoreboard__level' +
+              (levelFilter === 'childish' ? ' scoreboard__level--active' : '')
+            }
+            id="childish"
+            onClick={changeLevelHandler}
+          >
+            Childish
+          </span>
+          <span
+            className={
+              'scoreboard__level' +
+              (levelFilter === 'normal' ? ' scoreboard__level--active' : '')
+            }
+            id="normal"
+            onClick={changeLevelHandler}
+          >
+            Normal
+          </span>
+          <span
+            className={
+              'scoreboard__level' +
+              (levelFilter === 'insane' ? ' scoreboard__level--active' : '')
+            }
+            id="insane"
+            onClick={changeLevelHandler}
+          >
+            Insane
+          </span>
         </div>
-      ) : (
-        <Loader />
-      )}
+        <div className="scoreboard__columns">
+          <span>RANK</span>
+          <span>NAME</span>
+          <span>TIME</span>
+          <span>TURNS</span>
+        </div>
+        <div>
+          {scoresForDisplay.map((score) => {
+            return (
+              <Score
+                key={Math.random()}
+                rank={score.rank}
+                name={score.name}
+                time={score.time}
+                turns={score.turns}
+              />
+            );
+          })}
+        </div>
+      </div>
+
       <button className="close-button" onClick={props.onClose}>
         Close
       </button>

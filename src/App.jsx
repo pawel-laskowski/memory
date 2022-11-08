@@ -35,7 +35,13 @@ export const App = () => {
   return (
     <SettingsProvider>
       <div className="app">
-        <h1>MEMORY</h1>
+        <div className="header">
+          <h1>MEMORY</h1>
+          <button className="scoreboard-button" onClick={openScoreboardHandler}>
+            <img src="./images/trophy.png" />
+          </button>
+          {openScoreboard && <Scoreboard onClose={closeScoreboardHandler} />}
+        </div>
         <button onClick={openSettingsHandler}>Start New Game</button>
         {gameIsOn && <Game />}
         {openSettings && (
@@ -45,10 +51,6 @@ export const App = () => {
             closeSettingsHandler={closeSettingsHandler}
           />
         )}
-        <button className="button-scoreboard" onClick={openScoreboardHandler}>
-          <img src="./images/trophy.png" />
-        </button>
-        {openScoreboard && <Scoreboard onClose={closeScoreboardHandler} />}
       </div>
     </SettingsProvider>
   );

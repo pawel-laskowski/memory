@@ -1,9 +1,10 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SettingsContext } from '../store/settings-context';
 import { Modal } from '../UI/Modal';
 import './Settings.css';
 
 export const Settings = (props) => {
+  const [error, setError] = useState(null);
   const settingsCtx = useContext(SettingsContext);
 
   const changeThemeHandler = (theme) => {
@@ -16,17 +17,29 @@ export const Settings = (props) => {
   };
 
   const startGame = () => {
-    props.startGameHandler();
-    props.closeSettingsHandler();
+    if (settingsCtx.theme && settingsCtx.difficultyLevel) {
+      props.startGameHandler();
+      props.closeSettingsHandler();
+    } else {
+      setError('Please select your theme and difficulty level!');
+    }
   };
+
+  useEffect(() => {
+    if (settingsCtx.theme && settingsCtx.difficultyLevel) {
+      setError(null);
+    }
+  }, [settingsCtx.theme, settingsCtx.difficultyLevel]);
 
   return (
     <Modal onClose={props.onClose}>
-      <div className="container">
+      <div className="settings-container">
         <p>Theme:</p>
-        <div className="settings--options">
+        <div className="settings__options">
           <button
-            className={settingsCtx.theme === 'pokemon' ? 'active' : ''}
+            className={
+              'option' + (settingsCtx.theme === 'pokemon' ? ' active' : '')
+            }
             onClick={() => {
               changeThemeHandler('pokemon');
             }}
@@ -38,7 +51,9 @@ export const Settings = (props) => {
             />
           </button>
           <button
-            className={settingsCtx.theme === 'rickAndMorty' ? 'active' : ''}
+            className={
+              'option' + (settingsCtx.theme === 'rickAndMorty' ? ' active' : '')
+            }
             onClick={() => {
               changeThemeHandler('rickAndMorty');
             }}
@@ -50,7 +65,9 @@ export const Settings = (props) => {
             />
           </button>
           <button
-            className={settingsCtx.theme === 'kitties' ? 'active' : ''}
+            className={
+              'option' + (settingsCtx.theme === 'kitties' ? ' active' : '')
+            }
             onClick={() => {
               changeThemeHandler('kitties');
             }}
@@ -63,10 +80,11 @@ export const Settings = (props) => {
           </button>
         </div>
         <p>Difficulty level:</p>
-        <div className="settings--options">
+        <div className="settings__options">
           <button
             className={
-              settingsCtx.difficultyLevel === 'childish' ? 'active' : ''
+              'option' +
+              (settingsCtx.difficultyLevel === 'childish' ? ' active' : '')
             }
             onClick={changeDifficultyLevelHandler}
             value="childish"
@@ -74,21 +92,28 @@ export const Settings = (props) => {
             Childish
           </button>
           <button
-            className={settingsCtx.difficultyLevel === 'normal' ? 'active' : ''}
+            className={
+              'option' +
+              (settingsCtx.difficultyLevel === 'normal' ? ' active' : '')
+            }
             onClick={changeDifficultyLevelHandler}
             value="normal"
           >
             Normal
           </button>
           <button
-            className={settingsCtx.difficultyLevel === 'insane' ? 'active' : ''}
+            className={
+              'option' +
+              (settingsCtx.difficultyLevel === 'insane' ? ' active' : '')
+            }
             onClick={changeDifficultyLevelHandler}
             value="insane"
           >
             Insane
           </button>
         </div>
-        <button className="settings--confirm" onClick={startGame}>
+        {error && <p className="error-message">{error}</p>}
+        <button className="settings__confirm" onClick={startGame}>
           Start Game!
         </button>
       </div>

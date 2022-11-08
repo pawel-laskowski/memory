@@ -1,4 +1,4 @@
-.container {
+.settings-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,17 +8,33 @@
   border: 1px solid black;
 }
 
-.settings--options {
-  width: 80%;
+.settings__options {
+  width: 95%;
   display: flex;
   justify-content: space-between;
 }
 
-.settings--confirm {
+.option {
+  width: 100px;
+  max-height: 100px;
+  margin: 10px;
+  padding: 0.6em;
+}
+
+.settings__confirm {
   margin-top: 20px;
 }
 
 .theme-picture {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+}
+
+.error-message {
+  color: red;
+}
+
+@media (min-width: 481px) {
+  .settings__options {
+    width: 80%;
+  }
 }

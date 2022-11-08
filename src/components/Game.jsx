@@ -77,7 +77,7 @@ export const Game = () => {
   }, []);
 
   return (
-    <div>
+    <div className="game-container">
       {cards ? (
         <div className={`card-grid card-grid--${settingsCtx.difficultyLevel}`}>
           {cards.map((card) => (

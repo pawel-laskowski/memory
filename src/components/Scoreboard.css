@@ -16,6 +16,7 @@ h1 {
   flex-grow: 1;
   padding: 6px;
 }
+
 .scoreboard__level:hover {
   background: #f7f7f7;
 }
@@ -36,7 +37,7 @@ h1 {
   margin: auto;
 }
 
-.active {
+.scoreboard__level--active {
   background: #f7f7f7;
   font-weight: bold;
 }

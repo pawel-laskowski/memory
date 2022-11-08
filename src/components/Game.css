@@ -1,10 +1,18 @@
+.game-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .card-grid {
+  max-width: 100%;
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 10px;
 }
 
 .card-grid--childish {
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
 }
 
 .card-grid--normal {
@@ -12,5 +20,23 @@
 }
 
 .card-grid--insane {
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+@media (min-width: 481px) {
+  .card-grid {
+    grid-gap: 20px;
+  }
+
+  .card-grid--childish {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .card-grid--normal {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .card-grid--insane {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
 }
