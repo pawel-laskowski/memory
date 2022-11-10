@@ -5,14 +5,25 @@
 }
 
 .winner-form__input {
-  border: 1px solid #cacccd;
-  height: 30px;
-  width: 30%;
+  background-color: rgb(242, 244, 245);
+  border: none;
+  border-bottom: 1px solid rgb(0, 47, 52);
+  height: 2rem;
+  width: 40%;
 }
+
+h3 {
+  margin: 0.6rem;
+}
+
 p {
-  margin: 10px;
+  margin: 0.6rem;
 }
 
 button {
   margin-top: 15px;
+}
+
+.error {
+  color: red;
 }

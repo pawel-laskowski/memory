@@ -16,14 +16,47 @@
 .header h1 {
   font-size: 60px;
 }
-.scoreboard-button {
+.scoreboard-open {
   padding: 5px;
   width: 60px;
   height: 60px;
 }
 
-.scoreboard-button img {
+.scoreboard-open img {
   max-width: 100%;
+}
+
+.scoreboard-open:hover {
+  scale: 1.1;
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  14% {
+    transform: rotate(-2deg);
+  }
+  28% {
+    transform: rotate(-4deg);
+  }
+  43% {
+    transform: rotate(-2deg);
+  }
+  57% {
+    transform: rotate(0deg);
+  }
+  71% {
+    transform: rotate(2deg);
+  }
+  85% {
+    transform: rotate(4deg);
+  }
+  100% {
+    transform: rotate(2deg);
+  }
 }
 
 @media (min-width: 481px) {
@@ -34,7 +67,7 @@
     justify-content: center;
     position: relative;
   }
-  .scoreboard-button {
+  .scoreboard-open {
     position: absolute;
     right: 0;
   }

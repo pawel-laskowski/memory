@@ -57,7 +57,7 @@ export const WinnerForm = (props) => {
   return (
     <Modal onClose={props.onClose}>
       <form onSubmit={submitHandler} className="winner-form">
-        <p>Congratulations! You won the game!</p>
+        <h3>Congratulations! You won the game!</h3>
         <p>Please type your name to save your score.</p>
         <input
           className="winner-form__input"
@@ -65,10 +65,10 @@ export const WinnerForm = (props) => {
           value={name}
           onChange={nameInputChangeHandler}
         />
+        {error && <p className="error">{error}</p>}
         <button>Confirm</button>
+        {isLoading && <p>Sending data...</p>}
       </form>
-      {isLoading && <p>Sending data...</p>}
-      {error && <p>{error}</p>}
     </Modal>
   );
 };

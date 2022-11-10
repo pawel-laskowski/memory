@@ -37,9 +37,9 @@ export const App = () => {
       <div className="app">
         <div className="header">
           <h1>MEMORY</h1>
-          <button className="scoreboard-button" onClick={openScoreboardHandler}>
+          <div className="scoreboard-open" onClick={openScoreboardHandler}>
             <img src="./images/trophy.png" />
-          </button>
+          </div>
           {openScoreboard && <Scoreboard onClose={closeScoreboardHandler} />}
         </div>
         <button onClick={openSettingsHandler}>Start New Game</button>
