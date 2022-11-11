@@ -33,3 +33,16 @@
   transform: rotateY(90deg);
   transition-delay: 0s;
 }
+
+.spin .front {
+  animation: spin 1.5s;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

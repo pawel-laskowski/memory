@@ -3,13 +3,11 @@ h1 {
 }
 
 .scoreboard {
-  border: 1px solid #e5e5e5;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 .scoreboard__levels {
   display: flex;
   border-top: 1px solid #e5e5e5;
-
   justify-content: space-around;
 }
 .scoreboard__level {
@@ -30,14 +28,12 @@ h1 {
 }
 
 .close-button {
-  /* background: #f7f7f7;
-  border: 1px solid #e5e5e5; */
-  display: inline-block;
   padding: 8px 30px 8px 30px;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .scoreboard__level--active {
   background: #f7f7f7;
-  font-weight: bold;
+  font-weight: 750;
 }

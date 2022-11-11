@@ -9,7 +9,6 @@ export const Settings = (props) => {
 
   const changeThemeHandler = (theme) => {
     settingsCtx.changeTheme(theme);
-    console.log(theme);
   };
 
   const changeDifficultyLevelHandler = (e) => {

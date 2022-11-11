@@ -32,6 +32,10 @@ export const App = () => {
     setOpenSettings(false);
   };
 
+  const closeGameHandler = () => {
+    setGameIsOn(false);
+  };
+
   return (
     <SettingsProvider>
       <div className="app">
@@ -43,7 +47,7 @@ export const App = () => {
           {openScoreboard && <Scoreboard onClose={closeScoreboardHandler} />}
         </div>
         <button onClick={openSettingsHandler}>Start New Game</button>
-        {gameIsOn && <Game />}
+        {gameIsOn && <Game closeGameHandler={closeGameHandler} />}
         {openSettings && (
           <Settings
             onClose={closeSettingsHandler}

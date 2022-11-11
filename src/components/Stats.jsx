@@ -13,6 +13,7 @@ export const Stats = (props) => {
 
   const closeHandler = () => {
     setOpenWinnerForm(false);
+    props.closeGameHandler();
   };
 
   const getTime = () => {

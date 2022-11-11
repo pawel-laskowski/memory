@@ -10,9 +10,16 @@ export const Card = (props) => {
       props.handleChoice(props.card);
     }
   };
+
+  const flippedClassName = props.gameFinished
+    ? 'spin flipped'
+    : props.flipped
+    ? 'flipped'
+    : '';
+
   return (
     <div className="card">
-      <div className={props.flipped ? 'flipped' : ''}>
+      <div className={flippedClassName}>
         <img className="front" src={props.card.src} alt="card front" />
         <img
           className="back"

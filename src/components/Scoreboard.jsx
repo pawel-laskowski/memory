@@ -68,8 +68,8 @@ export const Scoreboard = (props) => {
 
   return (
     <Modal onClose={props.onClose}>
+      <h1>Best players</h1>
       <div className="scoreboard">
-        <h1>Best players</h1>
         <div className="scoreboard__levels">
           <span
             className={
@@ -122,7 +122,6 @@ export const Scoreboard = (props) => {
           })}
         </div>
       </div>
-
       <button className="close-button" onClick={props.onClose}>
         Close
       </button>

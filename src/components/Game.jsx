@@ -1,13 +1,14 @@
-import { Fragment, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Card } from './Card';
 import { prepareCards } from '../helpers/cards-data';
 import { SettingsContext } from '../store/settings-context';
 import { Stats } from './Stats';
-import moment from 'moment';
-import './Game.css';
 import { Loader } from '../UI/Loader';
 
-export const Game = () => {
+import moment from 'moment';
+import './Game.css';
+
+export const Game = (props) => {
   const [cards, setCards] = useState(null);
   const [turns, setTurns] = useState(0);
   const [startTime, setStartTime] = useState(null);
@@ -87,6 +88,7 @@ export const Game = () => {
               handleChoice={handleChoice}
               flipped={card === choiceOne || card === choiceTwo || card.matched}
               disabled={disabled}
+              gameFinished={gameFinished}
             />
           ))}
         </div>
@@ -98,6 +100,7 @@ export const Game = () => {
           turns={turns}
           startTime={startTime}
           gameFinished={gameFinished}
+          closeGameHandler={props.closeGameHandler}
         />
       )}
     </div>
