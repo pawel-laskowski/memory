@@ -1,8 +1,11 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+
+dayjs.extend(duration);
 
 export const formatTime = (timestamp) => {
-  const gameDuration = moment.duration(timestamp);
-  const { hours, minutes, seconds } = gameDuration._data;
+  const gameDuration = dayjs.duration(timestamp);
+  const { hours, minutes, seconds } = gameDuration.$d;
   const formatValue = (value) => (value < 10 ? '0' + value : value);
 
   let timeString;
@@ -26,15 +29,8 @@ export const formatTime = (timestamp) => {
 };
 
 export const formatTimeShort = (timestamp) => {
-  const gameDuration = moment.duration(timestamp);
-  const { hours, minutes, seconds } = gameDuration._data;
-  const formatValue = (value) => (value < 10 ? '0' + value : value);
-
-  let timeString;
-
-  timeString = `${formatValue(hours)}:${formatValue(minutes)}:${formatValue(
-    seconds
-  )}`;
+  const gameDuration = dayjs.duration(timestamp);
+  const timeString = gameDuration.format('HH:mm:ss');
 
   return timeString;
 };

@@ -4,8 +4,7 @@ import { prepareCards } from '../helpers/cards-data';
 import { SettingsContext } from '../store/settings-context';
 import { Stats } from './Stats';
 import { Loader } from '../UI/Loader';
-
-import moment from 'moment';
+import dayjs from 'dayjs';
 import './Game.css';
 
 export const Game = (props) => {
@@ -28,7 +27,7 @@ export const Game = (props) => {
       .map((card) => ({ ...card, id: Math.random() }));
     setCards(shuffledCards);
     setTurns(0);
-    setStartTime(moment().valueOf());
+    setStartTime(dayjs().valueOf());
     setChoiceOne(null);
     setChoiceTwo(null);
     setGameFinished(false);

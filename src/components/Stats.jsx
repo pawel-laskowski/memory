@@ -1,8 +1,8 @@
-import moment from 'moment';
 import { useContext, useEffect, useState } from 'react';
 import { formatTime } from '../helpers/time-format';
 import { SettingsContext } from '../store/settings-context';
 import { WinnerForm } from './WinnerForm';
+import dayjs from 'dayjs';
 
 import './Stats.css';
 
@@ -17,7 +17,7 @@ export const Stats = (props) => {
   };
 
   const getTime = () => {
-    const now = moment().valueOf();
+    const now = dayjs().valueOf();
     setGameTime(now - props.startTime);
   };
 
