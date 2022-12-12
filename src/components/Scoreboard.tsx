@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { formatTimeShort } from '../helpers/time-format';
-import { Loader } from '../UI/Loader';
 import { Modal } from '../UI/Modal';
 import { Score } from './Score';
 import './Scoreboard.css';

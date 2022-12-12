@@ -23,7 +23,6 @@ export const App = () => {
   };
 
   const openSettingsHandler = () => {
-    // warning about losing current game
     setGameIsOn(false);
     setOpenSettings(true);
   };

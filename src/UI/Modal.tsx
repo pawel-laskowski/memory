@@ -15,11 +15,11 @@ export const Modal = (props) => {
     <React.Fragment>
       {ReactDOM.createPortal(
         <Backdrop onClose={props.onClose} />,
-        document.getElementById('backdrop-root')
+        document.getElementById('backdrop-root') as HTMLElement
       )}
       {ReactDOM.createPortal(
         <ModalOverlay>{props.children}</ModalOverlay>,
-        document.getElementById('overlay-root')
+        document.getElementById('overlay-root') as HTMLElement
       )}
     </React.Fragment>
   );
