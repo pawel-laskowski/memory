@@ -4,12 +4,34 @@ import { Modal } from '../UI/Modal';
 import { Score } from './Score';
 import './Scoreboard.css';
 
-export const Scoreboard = (props) => {
-  const [scores, setScores] = useState([]);
-  const [levelFilter, setLevelFilter] = useState('childish');
-  const [scoresForDisplay, setScoresForDisplay] = useState([]);
+type ScoreType = {
+  difficultyLevel: string;
+  gameTime: number;
+  name: string;
+  turns: number;
+};
 
-  const changeLevelHandler = (e) => {
+export type ScoreForDisplayType = {
+  rank: string;
+  name: string;
+  time: string;
+  turns: string;
+};
+
+type ScoreboardPropsType = {
+  onClose: () => void;
+};
+
+export const Scoreboard = (props: ScoreboardPropsType) => {
+  const [scores, setScores] = useState<ScoreType[]>([]);
+  const [levelFilter, setLevelFilter] = useState('childish');
+  const [scoresForDisplay, setScoresForDisplay] = useState<
+    ScoreForDisplayType[]
+  >([]);
+
+  const changeLevelHandler = (
+    e: React.MouseEvent<HTMLSpanElement, MouseEvent>
+  ) => {
     setLevelFilter(e.target.id);
   };
 
@@ -42,7 +64,9 @@ export const Scoreboard = (props) => {
         time: scoresByLevel[index]
           ? formatTimeShort(scoresByLevel[index].gameTime)
           : '-',
-        turns: scoresByLevel[index] ? scoresByLevel[index].turns : '-',
+        turns: scoresByLevel[index]
+          ? scoresByLevel[index].turns.toString()
+          : '-',
       });
     }
 
@@ -56,8 +80,9 @@ export const Scoreboard = (props) => {
   useEffect(() => {
     fetch(import.meta.env.VITE_FIREBASE_URL)
       .then((response) => response.json())
-      .then((data) => {
-        const fetchedScores = [];
+      .then((data: { key: ScoreType }) => {
+        const fetchedScores: ScoreType[] = [];
+
         for (const [key, value] of Object.entries(data)) {
           fetchedScores.push(value);
         }

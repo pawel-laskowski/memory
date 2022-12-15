@@ -1,13 +1,13 @@
 import React, { useReducer } from 'react';
 
-enum Theme {
+export enum Theme {
   POKEMON = 'pokemon',
   RICKANDMONTY = 'rickAndMorty',
   KITTIES = 'kitties',
   NONE = '',
 }
 
-enum Level {
+export enum Level {
   CHILDISH = 'childish',
   NORMAL = 'normal',
   INSANE = 'insane',
@@ -26,24 +26,22 @@ const defaultSettingsState = {
 
 type SettingsContextTypes = {
   theme: Theme;
-  difficultyLevel: number;
+  difficultyLevel: Level;
   changeTheme: (theme: Theme) => void;
-  changeDifficultyLevel: (difficultyLevel: number) => void;
+  changeDifficultyLevel: (difficultyLevel: Level) => void;
 };
 
-export const SettingsContext = React.createContext<SettingsContextTypes | null>(
-  {
-    theme: Theme.NONE,
-    difficultyLevel: 0,
-    changeTheme: (theme) => {},
-    changeDifficultyLevel: (difficultyLevel) => {},
-  }
-);
+export const SettingsContext = React.createContext<SettingsContextTypes>({
+  theme: Theme.NONE,
+  difficultyLevel: Level.NONE,
+  changeTheme: (theme) => {},
+  changeDifficultyLevel: (difficultyLevel) => {},
+});
 
 type SettingsReducerActionTypes = {
   type: string;
   theme?: Theme;
-  difficultyLevel?: number;
+  difficultyLevel?: Level;
 };
 
 const settingsReducer = (state: any, action: SettingsReducerActionTypes) => {
@@ -70,7 +68,7 @@ export const SettingsProvider = (props: any) => {
     });
   };
 
-  const changeDifficultyLevel = (difficultyLevel: number) => {
+  const changeDifficultyLevel = (difficultyLevel: Level) => {
     dispatchSettingsAction({
       type: 'LEVEL',
       difficultyLevel,

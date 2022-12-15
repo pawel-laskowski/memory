@@ -1,5 +1,7 @@
-const randomCardNumbers = (availableCards, cardsAmount) => {
-  const cardNumbers = [];
+import { Level, Theme } from '../store/settings-context';
+
+const randomCardNumbers = (availableCards: number, cardsAmount: number) => {
+  const cardNumbers: string[] = [];
 
   for (let index = 0; index < cardsAmount; ) {
     const newNumber = (Math.random() * availableCards + 1).toFixed();
@@ -12,7 +14,7 @@ const randomCardNumbers = (availableCards, cardsAmount) => {
   return cardNumbers;
 };
 
-export const prepareCards = async (difficultyLevel, theme) => {
+export const prepareCards = async (difficultyLevel: Level, theme: Theme) => {
   let preparedCards;
   let availableCards;
   let cardsAmount;

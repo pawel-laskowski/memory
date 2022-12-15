@@ -1,8 +1,18 @@
 import { useContext } from 'react';
 import { SettingsContext } from '../store/settings-context';
 import './Card.css';
+import { CardType } from './Game';
 
-export const Card = (props) => {
+type CardPropsType = {
+  card: CardType;
+  key: number;
+  handleChoice: (card: CardType) => void;
+  flipped: boolean;
+  disabled: boolean;
+  gameFinished: boolean;
+};
+
+export const Card = (props: CardPropsType) => {
   const settingsCtx = useContext(SettingsContext);
 
   const handleClick = () => {

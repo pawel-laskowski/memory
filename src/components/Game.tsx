@@ -7,12 +7,22 @@ import { Loader } from '../UI/Loader';
 import dayjs from 'dayjs';
 import './Game.css';
 
-export const Game = (props) => {
-  const [cards, setCards] = useState(null);
+export type CardType = {
+  src: string;
+  matched: boolean;
+  id: number;
+};
+
+type GamePropsType = {
+  closeGameHandler: () => void;
+};
+
+export const Game = (props: GamePropsType) => {
+  const [cards, setCards] = useState<CardType[]>([]);
   const [turns, setTurns] = useState(0);
-  const [startTime, setStartTime] = useState(null);
-  const [choiceOne, setChoiceOne] = useState(null);
-  const [choiceTwo, setChoiceTwo] = useState(null);
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [choiceOne, setChoiceOne] = useState<CardType | null>(null);
+  const [choiceTwo, setChoiceTwo] = useState<CardType | null>(null);
   const [gameFinished, setGameFinished] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const settingsCtx = useContext(SettingsContext);
@@ -33,7 +43,7 @@ export const Game = (props) => {
     setGameFinished(false);
   };
 
-  const handleChoice = (card) => {
+  const handleChoice = (card: CardType) => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
@@ -78,7 +88,7 @@ export const Game = (props) => {
 
   return (
     <div className="game-container">
-      {cards ? (
+      {cards.length > 0 ? (
         <div className={`card-grid card-grid--${settingsCtx.difficultyLevel}`}>
           {cards.map((card) => (
             <Card

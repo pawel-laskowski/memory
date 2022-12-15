@@ -6,8 +6,15 @@ import dayjs from 'dayjs';
 
 import './Stats.css';
 
-export const Stats = (props) => {
-  const [gameTime, setGameTime] = useState('');
+type StatsPropsType = {
+  turns: number;
+  startTime: number;
+  gameFinished: boolean;
+  closeGameHandler: () => void;
+};
+
+export const Stats = (props: StatsPropsType) => {
+  const [gameTime, setGameTime] = useState(0);
   const settingsCtx = useContext(SettingsContext);
   const [openWinnerForm, setOpenWinnerForm] = useState(false);
 

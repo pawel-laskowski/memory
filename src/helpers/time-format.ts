@@ -3,10 +3,10 @@ import duration from 'dayjs/plugin/duration';
 
 dayjs.extend(duration);
 
-export const formatTime = (timestamp) => {
+export const formatTime = (timestamp: number) => {
   const gameDuration = dayjs.duration(timestamp);
   const { hours, minutes, seconds } = gameDuration.$d;
-  const formatValue = (value) => (value < 10 ? '0' + value : value);
+  const formatValue = (value: number) => (value < 10 ? '0' + value : value);
 
   let timeString;
 
@@ -28,7 +28,7 @@ export const formatTime = (timestamp) => {
   return timeString;
 };
 
-export const formatTimeShort = (timestamp) => {
+export const formatTimeShort = (timestamp: number) => {
   const gameDuration = dayjs.duration(timestamp);
   const timeString = gameDuration.format('HH:mm:ss');
 

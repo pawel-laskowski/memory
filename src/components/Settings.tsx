@@ -1,18 +1,24 @@
 import { useContext, useEffect, useState } from 'react';
-import { SettingsContext } from '../store/settings-context';
+import { Level, SettingsContext, Theme } from '../store/settings-context';
 import { Modal } from '../UI/Modal';
 import './Settings.css';
 
-export const Settings = (props) => {
-  const [error, setError] = useState(null);
+type SettingsPropsType = {
+  onClose: () => void;
+  startGameHandler: () => void;
+  closeSettingsHandler: () => void;
+};
+
+export const Settings = (props: SettingsPropsType) => {
+  const [error, setError] = useState<null | string>(null);
   const settingsCtx = useContext(SettingsContext);
 
-  const changeThemeHandler = (theme) => {
+  const changeThemeHandler = (theme: Theme) => {
     settingsCtx.changeTheme(theme);
   };
 
-  const changeDifficultyLevelHandler = (e) => {
-    settingsCtx.changeDifficultyLevel(e.target.value);
+  const changeDifficultyLevelHandler = (level: Level) => {
+    settingsCtx.changeDifficultyLevel(level);
   };
 
   const startGame = () => {
@@ -40,7 +46,7 @@ export const Settings = (props) => {
               'option' + (settingsCtx.theme === 'pokemon' ? ' active' : '')
             }
             onClick={() => {
-              changeThemeHandler('pokemon');
+              changeThemeHandler(Theme.POKEMON);
             }}
           >
             <img
@@ -54,7 +60,7 @@ export const Settings = (props) => {
               'option' + (settingsCtx.theme === 'rickAndMorty' ? ' active' : '')
             }
             onClick={() => {
-              changeThemeHandler('rickAndMorty');
+              changeThemeHandler(Theme.RICKANDMONTY);
             }}
           >
             <img
@@ -68,7 +74,7 @@ export const Settings = (props) => {
               'option' + (settingsCtx.theme === 'kitties' ? ' active' : '')
             }
             onClick={() => {
-              changeThemeHandler('kitties');
+              changeThemeHandler(Theme.KITTIES);
             }}
           >
             <img
@@ -85,8 +91,9 @@ export const Settings = (props) => {
               'option' +
               (settingsCtx.difficultyLevel === 'childish' ? ' active' : '')
             }
-            onClick={changeDifficultyLevelHandler}
-            value="childish"
+            onClick={() => {
+              changeDifficultyLevelHandler(Level.CHILDISH);
+            }}
           >
             Childish
           </button>
@@ -95,8 +102,9 @@ export const Settings = (props) => {
               'option' +
               (settingsCtx.difficultyLevel === 'normal' ? ' active' : '')
             }
-            onClick={changeDifficultyLevelHandler}
-            value="normal"
+            onClick={() => {
+              changeDifficultyLevelHandler(Level.NORMAL);
+            }}
           >
             Normal
           </button>
@@ -105,8 +113,9 @@ export const Settings = (props) => {
               'option' +
               (settingsCtx.difficultyLevel === 'insane' ? ' active' : '')
             }
-            onClick={changeDifficultyLevelHandler}
-            value="insane"
+            onClick={() => {
+              changeDifficultyLevelHandler(Level.INSANE);
+            }}
           >
             Insane
           </button>

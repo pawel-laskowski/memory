@@ -1,6 +1,11 @@
 import './Score.css';
+import { ScoreForDisplayType } from './Scoreboard';
 
-export const Score = (props) => {
+interface ScorePropsType extends ScoreForDisplayType {
+  key: number;
+}
+
+export const Score = (props: ScorePropsType) => {
   return (
     <div className="single-score">
       <span>{props.rank}</span>

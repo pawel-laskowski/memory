@@ -1,14 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
+import { Level } from '../store/settings-context';
 import { Modal } from '../UI/Modal';
 import './WinnerForm.css';
 
-export const WinnerForm = (props) => {
-  const [name, setName] = useState('');
-  // const nameRef = useRef();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+type WinnerFormPropsType = {
+  gameTime: number;
+  difficultyLevel: Level;
+  turns: number;
+  onClose: () => void;
+};
 
-  const nameInputChangeHandler = (e) => {
+export const WinnerForm = (props: WinnerFormPropsType) => {
+  const [name, setName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const nameInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError(null);
     const winnerName = e.target.value.trim();
     if (winnerName.length < 13) {
@@ -18,7 +25,7 @@ export const WinnerForm = (props) => {
     }
   };
 
-  const submitHandler = async (e) => {
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (name.length > 0) {
