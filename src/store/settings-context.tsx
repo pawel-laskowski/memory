@@ -19,16 +19,32 @@ type SettingsTypes = {
   difficultyLevel: Level;
 };
 
-const defaultSettingsState = {
+const defaultSettingsState: SettingsTypes = {
   theme: Theme.NONE,
   difficultyLevel: Level.NONE,
-} as SettingsTypes;
+};
 
 type SettingsContextTypes = {
   theme: Theme;
   difficultyLevel: Level;
   changeTheme: (theme: Theme) => void;
   changeDifficultyLevel: (difficultyLevel: Level) => void;
+};
+
+interface ActionTheme {
+  type: 'THEME';
+  theme: Theme;
+}
+
+interface ActionLevel {
+  type: 'LEVEL';
+  difficultyLevel: Level;
+}
+
+type SettingsReducerActionTypes = ActionTheme | ActionLevel;
+
+type SettingsProviderPropsType = {
+  children: React.ReactElement;
 };
 
 export const SettingsContext = React.createContext<SettingsContextTypes>({
@@ -38,24 +54,20 @@ export const SettingsContext = React.createContext<SettingsContextTypes>({
   changeDifficultyLevel: (difficultyLevel) => {},
 });
 
-type SettingsReducerActionTypes = {
-  type: string;
-  theme?: Theme;
-  difficultyLevel?: Level;
-};
-
-const settingsReducer = (state: any, action: SettingsReducerActionTypes) => {
+const settingsReducer = (
+  state: SettingsTypes,
+  action: SettingsReducerActionTypes
+) => {
   if (action.type === 'THEME') {
     return { theme: action.theme, difficultyLevel: state.difficultyLevel };
-  }
-  if (action.type === 'LEVEL') {
+  } else if (action.type === 'LEVEL') {
     return { difficultyLevel: action.difficultyLevel, theme: state.theme };
+  } else {
+    return defaultSettingsState;
   }
-
-  return defaultSettingsState;
 };
 
-export const SettingsProvider = (props: any) => {
+export const SettingsProvider = (props: SettingsProviderPropsType) => {
   const [settingsState, dispatchSettingsAction] = useReducer(
     settingsReducer,
     defaultSettingsState

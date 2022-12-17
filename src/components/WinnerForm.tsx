@@ -50,8 +50,12 @@ export const WinnerForm = (props: WinnerFormPropsType) => {
         if (!response.ok) {
           throw new Error('Request failed!');
         }
-      } catch (err) {
-        setError(err.message || 'Something went wrong!');
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('Something went wrong!');
+        }
       }
       setIsLoading(false);
 

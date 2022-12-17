@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { formatTimeShort } from '../helpers/time-format';
 import { Modal } from '../UI/Modal';
 import { Score } from './Score';
@@ -22,6 +22,12 @@ type ScoreboardPropsType = {
   onClose: () => void;
 };
 
+type LevelSpanType = React.MouseEvent<HTMLSpanElement, MouseEvent> & {
+  target: {
+    id: string;
+  };
+};
+
 export const Scoreboard = (props: ScoreboardPropsType) => {
   const [scores, setScores] = useState<ScoreType[]>([]);
   const [levelFilter, setLevelFilter] = useState('childish');
@@ -29,9 +35,7 @@ export const Scoreboard = (props: ScoreboardPropsType) => {
     ScoreForDisplayType[]
   >([]);
 
-  const changeLevelHandler = (
-    e: React.MouseEvent<HTMLSpanElement, MouseEvent>
-  ) => {
+  const changeLevelHandler = (e: LevelSpanType) => {
     setLevelFilter(e.target.id);
   };
 
@@ -92,63 +96,65 @@ export const Scoreboard = (props: ScoreboardPropsType) => {
 
   return (
     <Modal onClose={props.onClose}>
-      <h1>Best players</h1>
-      <div className="scoreboard">
-        <div className="scoreboard__levels">
-          <span
-            className={
-              'scoreboard__level' +
-              (levelFilter === 'childish' ? ' scoreboard__level--active' : '')
-            }
-            id="childish"
-            onClick={changeLevelHandler}
-          >
-            Childish
-          </span>
-          <span
-            className={
-              'scoreboard__level' +
-              (levelFilter === 'normal' ? ' scoreboard__level--active' : '')
-            }
-            id="normal"
-            onClick={changeLevelHandler}
-          >
-            Normal
-          </span>
-          <span
-            className={
-              'scoreboard__level' +
-              (levelFilter === 'insane' ? ' scoreboard__level--active' : '')
-            }
-            id="insane"
-            onClick={changeLevelHandler}
-          >
-            Insane
-          </span>
+      <>
+        <h1>Best players</h1>
+        <div className="scoreboard">
+          <div className="scoreboard__levels">
+            <span
+              className={
+                'scoreboard__level' +
+                (levelFilter === 'childish' ? ' scoreboard__level--active' : '')
+              }
+              id="childish"
+              onClick={changeLevelHandler}
+            >
+              Childish
+            </span>
+            <span
+              className={
+                'scoreboard__level' +
+                (levelFilter === 'normal' ? ' scoreboard__level--active' : '')
+              }
+              id="normal"
+              onClick={changeLevelHandler}
+            >
+              Normal
+            </span>
+            <span
+              className={
+                'scoreboard__level' +
+                (levelFilter === 'insane' ? ' scoreboard__level--active' : '')
+              }
+              id="insane"
+              onClick={changeLevelHandler}
+            >
+              Insane
+            </span>
+          </div>
+          <div className="scoreboard__columns">
+            <span>RANK</span>
+            <span>NAME</span>
+            <span>TIME</span>
+            <span>TURNS</span>
+          </div>
+          <div>
+            {scoresForDisplay.map((score) => {
+              return (
+                <Score
+                  key={Math.random()}
+                  rank={score.rank}
+                  name={score.name}
+                  time={score.time}
+                  turns={score.turns}
+                />
+              );
+            })}
+          </div>
         </div>
-        <div className="scoreboard__columns">
-          <span>RANK</span>
-          <span>NAME</span>
-          <span>TIME</span>
-          <span>TURNS</span>
-        </div>
-        <div>
-          {scoresForDisplay.map((score) => {
-            return (
-              <Score
-                key={Math.random()}
-                rank={score.rank}
-                name={score.name}
-                time={score.time}
-                turns={score.turns}
-              />
-            );
-          })}
-        </div>
-      </div>
-      <button className="close-button" onClick={props.onClose}>
-        Close
-      </button>
+        <button className="close-button" onClick={props.onClose}>
+          Close
+        </button>
+      </>
     </Modal>
   );
 };

@@ -5,7 +5,10 @@ dayjs.extend(duration);
 
 export const formatTime = (timestamp: number) => {
   const gameDuration = dayjs.duration(timestamp);
-  const { hours, minutes, seconds } = gameDuration.$d;
+  const seconds = gameDuration.seconds();
+  const minutes = gameDuration.minutes();
+  const hours = gameDuration.hours();
+
   const formatValue = (value: number) => (value < 10 ? '0' + value : value);
 
   let timeString;

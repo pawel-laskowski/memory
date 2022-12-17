@@ -1,4 +1,9 @@
+import { CardType } from '../components/Game';
 import { Level, Theme } from '../store/settings-context';
+
+type CatResponseType = {
+  url: string;
+};
 
 const randomCardNumbers = (availableCards: number, cardsAmount: number) => {
   const cardNumbers: string[] = [];
@@ -15,7 +20,7 @@ const randomCardNumbers = (availableCards: number, cardsAmount: number) => {
 };
 
 export const prepareCards = async (difficultyLevel: Level, theme: Theme) => {
-  let preparedCards;
+  let preparedCards: Omit<CardType, 'id'>[] = [];
   let availableCards;
   let cardsAmount;
 
@@ -65,7 +70,7 @@ export const prepareCards = async (difficultyLevel: Level, theme: Theme) => {
       }`
     )
       .then((response) => response.json())
-      .then((data) => {
+      .then((data: CatResponseType[]) => {
         preparedCards = data.map((kitti) => ({
           src: kitti.url,
           matched: false,
