@@ -16,7 +16,13 @@ type ModalOverlayPropsType = {
 };
 
 const Backdrop = (props: BackdropPropsType) => {
-  return <div className="backdrop" onClick={props.onClose}></div>;
+  return (
+    <div
+      className="backdrop"
+      onClick={props.onClose}
+      data-testid="backdrop"
+    ></div>
+  );
 };
 
 const ModalOverlay = (props: ModalOverlayPropsType) => {
