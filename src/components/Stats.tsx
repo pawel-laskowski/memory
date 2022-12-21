@@ -44,8 +44,8 @@ export const Stats = (props: StatsPropsType) => {
 
   return (
     <div className="stats">
-      <p>Turns: {props.turns}</p>
-      <p>Game time: {formatTime(gameTime)}</p>
+      <p data-testid="turns">Turns: {props.turns}</p>
+      <p data-testid="game-time">Game time: {formatTime(gameTime)}</p>
       {openWinnerForm && (
         <WinnerForm
           gameTime={gameTime}
