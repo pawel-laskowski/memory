@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 
 import ReactDOM from 'react-dom';
 import { Stats } from './Stats';
@@ -15,9 +15,9 @@ const finishedGameStatsProps = {
   closeGameHandler: () => {},
 };
 
-const activeGametatsProps = {
+const activeGameStatsProps = {
   turns: 123,
-  startTime: dayjs().subtract(3, 'minute').valueOf(),
+  startTime: dayjs(0).subtract(3, 'minute').valueOf(),
   gameFinished: false,
   closeGameHandler: () => {},
 };
@@ -33,17 +33,16 @@ describe('Stats', () => {
     vitest.runAllTimers();
   });
 
-  it('should display correct turns and game time', () => {
+  it('should display correct turns and game time', async () => {
     vitest.useFakeTimers();
-    render(<Stats {...activeGametatsProps} />);
+    vitest.setSystemTime(0);
+    render(<Stats {...activeGameStatsProps} />);
     act(() => {
-      vitest.runOnlyPendingTimers();
+      vitest.advanceTimersByTime(5000);
     });
     const turns = screen.getByTestId('turns');
     const gameTime = screen.getByTestId('game-time');
     expect(turns).toHaveTextContent('Turns: 123');
-    // ERROR
-    expect(gameTime).toHaveTextContent('Game time: 03 minutes 00 seconds');
-    vitest.runAllTimers();
+    expect(gameTime).toHaveTextContent('Game time: 03 minutes 05 seconds');
   });
 });
