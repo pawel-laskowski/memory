@@ -33,7 +33,7 @@ describe('Stats', () => {
     vitest.runAllTimers();
   });
 
-  it('should display correct turns and game time', async () => {
+  it('should display correct turns and game time', () => {
     vitest.useFakeTimers();
     vitest.setSystemTime(0);
     render(<Stats {...activeGameStatsProps} />);
