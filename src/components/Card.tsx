@@ -28,7 +28,7 @@ export const Card = (props: CardPropsType) => {
     : '';
 
   return (
-    <div className="card">
+    <div className={`card ${props.disabled ? 'disabled' : ''}`}>
       <div className={flippedClassName}>
         <img className="front" src={props.card.src} alt="card front" />
         <img
