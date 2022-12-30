@@ -2,9 +2,6 @@ h1 {
   text-align: center;
 }
 
-.scoreboard {
-  /* margin-bottom: 10px; */
-}
 .scoreboard__levels {
   display: flex;
   border-top: 1px solid #e5e5e5;
