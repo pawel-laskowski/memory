@@ -1,11 +1,9 @@
 /// <reference types="vitest/globals" />
+import 'whatwg-fetch';
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
+import { server } from './utils/test-server';
 
-import createFetchMock from 'vitest-fetch-mock';
-import { vi } from 'vitest';
-
-const fetchMock = createFetchMock(vi);
-
-// sets globalThis.fetch and globalThis.fetchMock to our mocked version
-fetchMock.enableMocks();
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
