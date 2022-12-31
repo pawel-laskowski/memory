@@ -67,7 +67,11 @@ export const WinnerForm = (props: WinnerFormPropsType) => {
 
   return (
     <Modal onClose={props.onClose}>
-      <form onSubmit={submitHandler} className="winner-form">
+      <form
+        onSubmit={submitHandler}
+        className="winner-form"
+        data-testid="winner-form"
+      >
         <h3>Congratulations! You won the game!</h3>
         <p>Please type your name to save your score.</p>
         <input

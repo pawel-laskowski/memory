@@ -41,7 +41,7 @@ export const App = () => {
         <div className="header">
           <h1>MEMORY</h1>
           <div className="scoreboard-open" onClick={openScoreboardHandler}>
-            <img src="./images/trophy.png" />
+            <img src="./images/trophy.png" alt="trophy" />
           </div>
           {openScoreboard && <Scoreboard onClose={closeScoreboardHandler} />}
         </div>

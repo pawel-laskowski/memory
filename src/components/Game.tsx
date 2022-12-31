@@ -87,7 +87,7 @@ export const Game = (props: GamePropsType) => {
   }, []);
 
   return (
-    <div className="game-container">
+    <div className="game-container" data-testid="game">
       {cards.length > 0 ? (
         <div className={`card-grid card-grid--${settingsCtx.difficultyLevel}`}>
           {cards.map((card) => (

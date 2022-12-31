@@ -38,7 +38,7 @@ export const Settings = (props: SettingsPropsType) => {
 
   return (
     <Modal onClose={props.onClose}>
-      <div className="settings-container">
+      <div className="settings-container" data-testid="settings">
         <p>Theme:</p>
         <div className="settings__options">
           <button
