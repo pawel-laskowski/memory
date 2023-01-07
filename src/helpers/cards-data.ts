@@ -6,7 +6,7 @@ type CatResponseType = {
   url: string;
 };
 
-export const prepareCards = async (difficultyLevel: Level, theme: Theme) => {
+export const fetchCards = async (difficultyLevel: Level, theme: Theme) => {
   let preparedCards: Omit<CardType, 'id'>[] = [];
   let availableCards;
   let cardsAmount;

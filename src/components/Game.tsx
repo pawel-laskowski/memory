@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Card } from './Card';
-import { prepareCards } from '../helpers/cards-data';
+import { fetchCards } from '../helpers/cards-data';
 import { SettingsContext } from '../store/settings-context';
 import { Stats } from './Stats';
 import { Loader } from '../UI/Loader';
@@ -27,14 +27,15 @@ export const Game = (props: GamePropsType) => {
   const [disabled, setDisabled] = useState(false);
   const settingsCtx = useContext(SettingsContext);
 
-  const shuffleCards = async () => {
-    const cards = await prepareCards(
+  const prepareCards = async () => {
+    const cards = await fetchCards(
       settingsCtx.difficultyLevel,
       settingsCtx.theme
     );
     const shuffledCards = [...cards, ...cards]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
+
     setCards(shuffledCards);
     setTurns(0);
     setStartTime(dayjs().valueOf());
@@ -54,6 +55,12 @@ export const Game = (props: GamePropsType) => {
     setDisabled(false);
   };
 
+  const handleWrongChoices = () => {
+    setTimeout(() => {
+      resetTurn();
+    }, 1000);
+  };
+
   useEffect(() => {
     if (choiceOne && choiceTwo) {
       setDisabled(true);
@@ -66,9 +73,7 @@ export const Game = (props: GamePropsType) => {
         });
         resetTurn();
       } else {
-        setTimeout(() => {
-          resetTurn();
-        }, 1000);
+        handleWrongChoices();
       }
     }
   }, [choiceOne, choiceTwo]);
@@ -83,7 +88,7 @@ export const Game = (props: GamePropsType) => {
   }, [cards]);
 
   useEffect(() => {
-    shuffleCards();
+    prepareCards();
   }, []);
 
   return (

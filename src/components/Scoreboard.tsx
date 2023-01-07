@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { formatTimeShort } from '../helpers/time-format';
+import { Level } from '../store/settings-context';
 import { Modal } from '../UI/Modal';
 import { Score } from './Score';
 import './Scoreboard.css';
@@ -12,7 +14,7 @@ type ScoreType = {
 };
 
 export type ScoreForDisplayType = {
-  rank: string;
+  rank: number;
   name: string;
   time: string;
   turns: string;
@@ -22,48 +24,29 @@ type ScoreboardPropsType = {
   onClose: () => void;
 };
 
-type LevelSpanType = React.MouseEvent<HTMLSpanElement, MouseEvent> & {
-  target: {
-    id: string;
-  };
+type ScoreResponseType = {
+  key: ScoreType;
 };
 
 export const Scoreboard = (props: ScoreboardPropsType) => {
+  const { isLoading, error, data } = useQuery<ScoreResponseType>('scores', () =>
+    fetch(import.meta.env.VITE_FIREBASE_URL).then((res) => res.json())
+  );
   const [scores, setScores] = useState<ScoreType[]>([]);
-  const [levelFilter, setLevelFilter] = useState('childish');
+  const [levelFilter, setLevelFilter] = useState(Level.CHILDISH);
   const [scoresForDisplay, setScoresForDisplay] = useState<
     ScoreForDisplayType[]
   >([]);
 
-  const changeLevelHandler = (e: LevelSpanType) => {
-    setLevelFilter(e.target.id);
-  };
-
-  const filterScores = () => {
+  const prepareScoresForDisplay = () => {
     const scoresByLevel = scores
       .filter((score) => score.difficultyLevel === levelFilter)
       .sort((a, b) => (a.gameTime > b.gameTime ? 1 : -1));
-    const filteredScores = [];
+    const preparedScores: ScoreForDisplayType[] = [];
 
     for (let index = 0; index < 10; index++) {
-      let suffix;
-
-      switch (index + 1) {
-        case 1:
-          suffix = 'st';
-          break;
-        case 2:
-          suffix = 'nd';
-          break;
-        case 3:
-          suffix = 'rd';
-          break;
-        default:
-          suffix = 'th';
-      }
-
-      filteredScores.push({
-        rank: index + 1 + suffix,
+      preparedScores.push({
+        rank: index + 1,
         name: scoresByLevel[index] ? scoresByLevel[index].name : '-',
         time: scoresByLevel[index]
           ? formatTimeShort(scoresByLevel[index].gameTime)
@@ -74,25 +57,23 @@ export const Scoreboard = (props: ScoreboardPropsType) => {
       });
     }
 
-    setScoresForDisplay(filteredScores);
+    setScoresForDisplay(preparedScores);
   };
 
   useEffect(() => {
-    filterScores();
+    prepareScoresForDisplay();
   }, [levelFilter, scores]);
 
   useEffect(() => {
-    fetch(import.meta.env.VITE_FIREBASE_URL)
-      .then((response) => response.json())
-      .then((data: { key: ScoreType }) => {
-        const fetchedScores: ScoreType[] = [];
+    if (data) {
+      const fetchedScores: ScoreType[] = [];
 
-        for (const [key, value] of Object.entries(data)) {
-          fetchedScores.push(value);
-        }
-        setScores(fetchedScores);
-      });
-  }, []);
+      for (const [key, value] of Object.entries(data)) {
+        fetchedScores.push(value);
+      }
+      setScores(fetchedScores);
+    }
+  }, [data]);
 
   return (
     <Modal onClose={props.onClose}>
@@ -104,8 +85,7 @@ export const Scoreboard = (props: ScoreboardPropsType) => {
               'scoreboard__level' +
               (levelFilter === 'childish' ? ' scoreboard__level--active' : '')
             }
-            id="childish"
-            onClick={changeLevelHandler}
+            onClick={() => setLevelFilter(Level.CHILDISH)}
           >
             Childish
           </span>
@@ -114,8 +94,7 @@ export const Scoreboard = (props: ScoreboardPropsType) => {
               'scoreboard__level' +
               (levelFilter === 'normal' ? ' scoreboard__level--active' : '')
             }
-            id="normal"
-            onClick={changeLevelHandler}
+            onClick={() => setLevelFilter(Level.NORMAL)}
           >
             Normal
           </span>
@@ -124,8 +103,7 @@ export const Scoreboard = (props: ScoreboardPropsType) => {
               'scoreboard__level' +
               (levelFilter === 'insane' ? ' scoreboard__level--active' : '')
             }
-            id="insane"
-            onClick={changeLevelHandler}
+            onClick={() => setLevelFilter(Level.INSANE)}
           >
             Insane
           </span>
@@ -136,6 +114,8 @@ export const Scoreboard = (props: ScoreboardPropsType) => {
           <span>TIME</span>
           <span>TURNS</span>
         </div>
+        {isLoading && 'isLoading'}
+        {error && 'error'}
         <div>
           {scoresForDisplay.map((score) => {
             return (
