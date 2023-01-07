@@ -8,14 +8,14 @@ import { App } from './App';
 ReactDOM.createPortal = (node) => node;
 
 const renderApp = () => {
-  render(<App></App>);
+  render(<App />);
 };
 
 describe('App', () => {
   it('should show Scoreboard when trophy is clicked', () => {
     renderApp();
     fireEvent.click(screen.getByAltText('trophy'));
-    expect(screen.getByText('Best players')).toBeInTheDocument();
+    expect(screen.getByText('Best players')).toBeVisible();
   });
 
   it('should hide Scoreboard when onClose is clicked', () => {

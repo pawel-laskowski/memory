@@ -25,7 +25,7 @@ const disabledCardProps = {
 };
 
 describe('Card', () => {
-  it('should add correct className to Card when gameFinished prop is true', () => {
+  it('should spin cards when game is finished', () => {
     render(<Card {...cardPorps} />);
     expect(screen.getByTestId('card-flipper')).toHaveClass('spin flipped');
   });
