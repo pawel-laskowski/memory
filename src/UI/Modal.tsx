@@ -4,7 +4,7 @@ import './Modal.css';
 
 type ModalPropsType = {
   onClose: () => void;
-  children: JSX.Element;
+  children: React.ReactNode;
 };
 
 type BackdropPropsType = {
@@ -12,7 +12,7 @@ type BackdropPropsType = {
 };
 
 type ModalOverlayPropsType = {
-  children: React.ReactElement;
+  children: React.ReactNode;
 };
 
 const Backdrop = (props: BackdropPropsType) => {

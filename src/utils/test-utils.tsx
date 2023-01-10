@@ -1,15 +1,16 @@
 /* eslint-disable import/export */
-import { cleanup, render } from '@testing-library/react';
-import { afterEach } from 'vitest';
+import { render } from '@testing-library/react';
+import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-afterEach(() => {
-  cleanup();
-});
+const queryClient = new QueryClient();
 
 const customRender = (ui: React.ReactElement, options = {}) =>
   render(ui, {
     // wrap provider(s) here if needed
-    wrapper: ({ children }) => children,
+    wrapper: ({ children }) => (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    ),
     ...options,
   });
 

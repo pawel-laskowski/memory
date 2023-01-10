@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { formatTime } from '../helpers/time-format';
 import { SettingsContext } from '../store/settings-context';
 import { WinnerForm } from './WinnerForm';
@@ -23,10 +23,10 @@ export const Stats = (props: StatsPropsType) => {
     props.closeGameHandler();
   };
 
-  const getTime = () => {
+  const getTime = useCallback(() => {
     const now = dayjs().valueOf();
     setGameTime(now - props.startTime);
-  };
+  }, [props.startTime]);
 
   useEffect(() => {
     if (props.gameFinished) {
@@ -40,7 +40,7 @@ export const Stats = (props: StatsPropsType) => {
       }, 1000);
       return () => clearInterval(interval);
     }
-  }, [props.startTime, props.gameFinished]);
+  }, [props.startTime, props.gameFinished, getTime]);
 
   return (
     <div className="stats">

@@ -1,10 +1,7 @@
-import ReactDOM from 'react-dom';
+import { describe, expect, it, vitest } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Settings } from './Settings';
 import { SettingsProvider } from '../store/settings-context';
-
-// @ts-ignore
-ReactDOM.createPortal = (node) => node;
 
 const settingsProps = {
   onClose: vitest.fn(),

@@ -1,10 +1,7 @@
-import ReactDOM from 'react-dom';
+import { describe, expect, it, vitest } from 'vitest';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { CardType, Game } from './Game';
+import { Game } from './Game';
 import { Level, SettingsContext, Theme } from '../store/settings-context';
-
-// @ts-ignore
-ReactDOM.createPortal = (node) => node;
 
 vitest.mock('../helpers/random-numbers', () => ({
   randomCardNumbers: () => ['1', '2'],

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { formatTimeShort } from '../helpers/time-format';
 import { Level } from '../store/settings-context';
@@ -38,7 +38,7 @@ export const Scoreboard = (props: ScoreboardPropsType) => {
     ScoreForDisplayType[]
   >([]);
 
-  const prepareScoresForDisplay = () => {
+  const prepareScoresForDisplay = useCallback(() => {
     const scoresByLevel = scores
       .filter((score) => score.difficultyLevel === levelFilter)
       .sort((a, b) => (a.gameTime > b.gameTime ? 1 : -1));
@@ -58,17 +58,17 @@ export const Scoreboard = (props: ScoreboardPropsType) => {
     }
 
     setScoresForDisplay(preparedScores);
-  };
+  }, [levelFilter, scores]);
 
   useEffect(() => {
     prepareScoresForDisplay();
-  }, [levelFilter, scores]);
+  }, [levelFilter, scores, prepareScoresForDisplay]);
 
   useEffect(() => {
     if (data) {
       const fetchedScores: ScoreType[] = [];
 
-      for (const [key, value] of Object.entries(data)) {
+      for (const [, value] of Object.entries(data)) {
         fetchedScores.push(value);
       }
       setScores(fetchedScores);

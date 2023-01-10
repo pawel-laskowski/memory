@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Card } from './Card';
 import { fetchCards } from '../helpers/cards-data';
 import { SettingsContext } from '../store/settings-context';
@@ -45,6 +45,7 @@ export const Game = (props: GamePropsType) => {
   };
 
   const handleChoice = (card: CardType) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
@@ -55,11 +56,11 @@ export const Game = (props: GamePropsType) => {
     setDisabled(false);
   };
 
-  const handleWrongChoices = () => {
+  const handleWrongChoices = useCallback(() => {
     setTimeout(() => {
       resetTurn();
     }, 1000);
-  };
+  }, []);
 
   useEffect(() => {
     if (choiceOne && choiceTwo) {
@@ -76,7 +77,7 @@ export const Game = (props: GamePropsType) => {
         handleWrongChoices();
       }
     }
-  }, [choiceOne, choiceTwo]);
+  }, [choiceOne, choiceTwo, handleWrongChoices]);
 
   useEffect(() => {
     if (cards) {
@@ -89,6 +90,7 @@ export const Game = (props: GamePropsType) => {
 
   useEffect(() => {
     prepareCards();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

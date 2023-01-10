@@ -50,8 +50,8 @@ type SettingsProviderPropsType = {
 export const SettingsContext = React.createContext<SettingsContextTypes>({
   theme: Theme.NONE,
   difficultyLevel: Level.NONE,
-  changeTheme: (theme) => {},
-  changeDifficultyLevel: (difficultyLevel) => {},
+  changeTheme: () => {},
+  changeDifficultyLevel: () => {},
 });
 
 const settingsReducer = (

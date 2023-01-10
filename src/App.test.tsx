@@ -1,11 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
-import ReactDOM from 'react-dom';
 
 import { App } from './App';
-
-// @ts-ignore
-ReactDOM.createPortal = (node) => node;
 
 const renderApp = () => {
   render(<App />);

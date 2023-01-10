@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import { describe, expect, it, vitest } from 'vitest';
 import {
   act,
   fireEvent,
@@ -9,9 +9,6 @@ import {
 import { WinnerForm } from './WinnerForm';
 import { Level } from '../store/settings-context';
 import { userEvent } from '../utils/test-utils';
-
-// @ts-ignore
-ReactDOM.createPortal = (node) => node;
 
 const winnerFormProps = {
   gameTime: 500,

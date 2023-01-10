@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Level } from '../store/settings-context';
 import { Modal } from '../UI/Modal';
 import './WinnerForm.css';

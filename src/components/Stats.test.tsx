@@ -1,12 +1,7 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it, vitest } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
-
-import ReactDOM from 'react-dom';
 import { Stats } from './Stats';
 import dayjs from 'dayjs';
-
-// @ts-ignore
-ReactDOM.createPortal = (node) => node;
 
 const finishedGameStatsProps = {
   turns: 5,
